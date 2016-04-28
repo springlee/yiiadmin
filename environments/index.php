@@ -30,7 +30,7 @@
  */
 return [
     'Development' => [
-        'path' => 'dev',
+        'path' => 'prod',
         'setWritable' => [
             'backend/runtime',
             'backend/web/assets',

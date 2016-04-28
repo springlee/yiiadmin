@@ -3,7 +3,7 @@
     use yii\helpers\Url;
     use yii\helpers\Html;
     use backend\assets\AppAsset;
-    AppAsset::addScript($this,'@web/custom/user.js');
+    AppAsset::addScript($this,'@web/custom/table.js');
 ?>
 <div class="card">
     <?php if(Yii::$app->session->get('msg')){ ?>

@@ -1,17 +1,7 @@
 <?php
-/**
- * 权限控制器
- * Created by PhpStorm.
- * User: xu.gao
- * Date: 2016/1/25
- * Time: 11:02
- */
 
-namespace backend\controllers\Admin;
+namespace backend\controllers;
 
-
-
-use backend\controllers\BaseController;
 use backend\tools\Flush;
 use backend\tools\ResponseUtils;
 use Yii;
@@ -27,34 +17,31 @@ class RoleController extends BaseController{
         $this->roleservice       = Yii::createObject('roleservice');
         $this->permissionservice = Yii::createObject('permissionservice');
     }
+
+    public function actionRole(){
+        return $this->render('rolelist');
+    }
+
     /**
      * 角色列表
      */
     public function actionRolelist(){
-
         $request = Yii::$app->request;
-
-        if($request->isAjax){
-
-            //查询条件
-            $params['search']   = $request->post('searchPhrase','');
-            $sort               = $request->post('sort');
-            $params['sort']     = key($sort).' '.$sort[key($sort)];
-            $params['pageIndex']= $request->post('current',1);
-            $params['pageSize'] = $request->post('rowCount',10);
-            $params['type']     = '1';
-            $data               = $this->roleservice->roleList($params);
-            $totalCount         = $this->roleservice->roleCount($params);
-            $json_data = array(
-                "current"        => intval( $params['pageIndex'] ),
-                "rowCount"       => intval( $params['pageSize'] ),
-                "total"          => intval( $totalCount ),
-                "rows"           => $data
-            );
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $json_data;
-        }
-        return $this->render('rolelist');
+        $params['search']   = $request->get('searchPhrase','');
+        $sort               = $request->get('sort','created_at');
+        $order              = $request->get('order','');
+        $params['sort']     = $sort.' '.$order;
+        $params['offset']   = $request->get('offset',0);
+        $params['pageSize'] = $request->get('limit',10);
+        $params['type']     = '1';
+        $data               = $this->permissionservice->permissionList($params);
+        $totalCount         = $this->permissionservice->permissionCount($params);
+        $json_data = array(
+            "total"          => intval( $totalCount ),
+            "rows"           => $data
+        );
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $json_data;
     }
     /**
      * 添加角色
@@ -141,9 +128,7 @@ class RoleController extends BaseController{
     /**
      * 删除角色
      */
-    public function actionRoledelete(){
-
-           $name = Yii::$app->request->post('name','');
+    public function actionRoledelete($name){
            $ret  = $this->roleservice->deleteRole(['name'=>$name,'type'=>1]);
            Yii::$app->response->format = Response::FORMAT_JSON;
            return ResponseUtils::response_data($ret,'删除');

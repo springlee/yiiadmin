@@ -41,8 +41,7 @@ class Menu extends ActiveRecord{
         //每页显示几条
         $limit  = $page['pageSize'];
         //计算分页
-        $offset = $page['pageIndex']* $limit;
-
+        $offset = $page['offset'];
         $ret    = $query    ->andFilterWhere(['like','name',$page['search']])
                             ->andFilterWhere(['=','parent_id',0])
                             ->offset($offset)
@@ -57,13 +56,10 @@ class Menu extends ActiveRecord{
      * $where 查询条件数组
      */
     public static function dataCount($where){
-
         $query       = static::find();
-
-        $totalCount  = $query->andFilterWhere(['like','username',$where['search']])
+        $totalCount  = $query->andFilterWhere(['like','name',$where['search']])
                             ->andFilterWhere(['=','parent_id',0])
                             ->count();
-
         return $totalCount;
     }
 

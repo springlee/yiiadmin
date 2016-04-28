@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: xu.gao
- * Date: 2016/1/18
- * Time: 11:07
- */
 
 namespace backend\controllers;
 
@@ -40,12 +34,12 @@ class UserController extends BaseController
     public function actionUserlist(){
         $request = Yii::$app->request;
             //查询条件
-            $params['search']   = $request->post('searchPhrase','');
-            $sort               = $request->post('sort','');
-            $order              = $request->post('order','');
+            $params['search']   = $request->get('searchPhrase','');
+            $sort               = $request->get('sort','created_at');
+            $order              = $request->get('order','');
             $params['sort']     = $sort.' '.$order;
-            $params['pageIndex']= $request->post('offset',0);
-            $params['pageSize'] = $request->post('limit',10);
+            $params['offset']= $request->get('offset',0);
+            $params['pageSize'] = $request->get('limit',10);
             $data               = $this->userService->userList($params);
             $totalCount         = $this->userService->userCount($params);
             $json_data = array(
@@ -100,22 +94,14 @@ class UserController extends BaseController
      * 用户更新数据处理
      */
     public function actionUserupdatedone(){
-
         $request = Yii::$app->request;
         if($request->isPost){
             $model = $this->userService->updateUser($request->post());
             if($model->errors){
                 return $this->render('userupdate',['model'=>$model,'error'=>$model->errors]);
             }else{
-                Flush::success('更新成功');
-                //查询角色列表
-                $roleList = $this->roleService->queryAllRoleByWhere(['type'=>1]);
-                //查询当前用户所拥有的角色
-                $roles = ArrayHelper::toArray(Yii::$app->authManager->getAssignments($request->post('id')));
-                $roles = array_keys($roles);
                 return$this->redirect(array('/user/user'));
             }
-
         }
     }
 

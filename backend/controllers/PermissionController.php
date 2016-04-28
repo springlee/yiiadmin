@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: xu.gao
- * Date: 2016/1/26
- * Time: 11:05
- */
 
 namespace backend\controllers;
 
@@ -25,31 +19,29 @@ class PermissionController extends BaseController{
     /**
      * 权限列表
      */
-    public function actionPermissionlist(){
-
-        $request = Yii::$app->request;
-
-        if($request->isAjax){
-
-            //查询条件
-            $params['search']   = $request->post('searchPhrase','');
-            $sort               = $request->post('sort');
-            $params['sort']     = key($sort).' '.$sort[key($sort)];
-            $params['pageIndex']= $request->post('current',1);
-            $params['pageSize'] = $request->post('rowCount',10);
-            $params['type']     = '2';
-            $data               = $this->permissionservice->permissionList($params);
-            $totalCount         = $this->permissionservice->permissionCount($params);
-            $json_data = array(
-                "current"        => intval( $params['pageIndex'] ),
-                "rowCount"       => intval( $params['pageSize'] ),
-                "total"          => intval( $totalCount ),
-                "rows"           => $data
-            );
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $json_data;
-        }
+    public function actionPermission(){
         return $this->render('permissionlist');
+    }
+    /**
+     * 权限列表
+     */
+    public function actionPermissionlist(){
+        $request = Yii::$app->request;
+        $params['search']   = $request->get('searchPhrase','');
+        $sort               = $request->get('sort','created_at');
+        $order              = $request->get('order','');
+        $params['sort']     = $sort.' '.$order;
+        $params['offset']   = $request->get('offset',0);
+        $params['pageSize'] = $request->get('limit',10);
+        $params['type']     = '2';
+        $data               = $this->permissionservice->permissionList($params);
+        $totalCount         = $this->permissionservice->permissionCount($params);
+        $json_data = array(
+            "total"          => intval( $totalCount ),
+            "rows"           => $data
+        );
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $json_data;
     }
     /**
      * 添加权限
@@ -80,9 +72,7 @@ class PermissionController extends BaseController{
     /**
      * 更新权限数据
      */
-    public function actionPermissionupdate(){
-
-        $name  = Yii::$app->request->get('name','');
+    public function actionPermissionupdate($name){
 
         $model = $this->permissionservice->queryPermission(['name'=>$name,'type'=>2]);
 
@@ -92,24 +82,18 @@ class PermissionController extends BaseController{
      * 更新权限数据处理
      */
     public function actionPermissionupdatedone(){
-
         $request = Yii::$app->request;
         $model   = $this->permissionservice->updatePermission($request->post());
         if($model->errors){
-
             return $this->render('permissionupdate',['model'=>$model,'error'=>$model->errors]);
-
         }else{
-            Flush::success('更新成功');
-            return $this->render('permissionupdate',['model'=>$model]);
+            return $this->redirect(array('/permission/permission'));
         }
     }
     /**
      * 删除权限数据
      */
-    public function actionPermissiondelete(){
-
-        $name = Yii::$app->request->post('name','');
+    public function actionPermissiondelete($name){
         $ret = $this->permissionservice->deletePermission(['name'=>$name,'type'=>2]);
         Yii::$app->response->format = Response::FORMAT_JSON;
         return ResponseUtils::response_data($ret,'删除');

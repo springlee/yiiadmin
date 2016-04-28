@@ -13,9 +13,6 @@ function detailFormatter(index, row) {
     return str;
 }
 function operateFormatterMenu(value, row, index) {
-    console.log(value);
-    console.log(row);
-    console.log(index);
     return [
         '<a class="edit" href="/menu/menuupdate/'+row.id+'" title="edit">',
         '[编辑]',
@@ -37,6 +34,30 @@ function operateFormatterUser(value, row, index) {
     ].join('');
 }
 
+function operateFormatterPermission(value, row, index) {
+    return [
+        '<a class="edit" href="/permission/permissionupdate/'+row.name+'" title="edit">',
+        '[编辑]',
+        '</a>  ',
+        '<a class="remove" href="javascript:void(0)" title="Remove" data-url="/permission/permissiondelete/'+row.name+'">',
+        '[删除]',
+        '</a>'
+    ].join('');
+}
+
+function operateFormatterRole(value, row, index) {
+    return [
+        '<a class="edit" href="/role/roleupdate/'+row.name+'" title="edit">',
+        '[编辑]',
+        '</a>  ',
+        '<a class="remove" href="javascript:void(0)" title="Remove" data-url="/role/roledelete/'+row.name+'">',
+        '[删除]',
+        '</a>',
+        '<a class="edit" href="/role/rolepermission/'+row.name+'" title="edit">',
+        '[分配权限]',
+        '</a>'
+    ].join('');
+}
 function getSonStr(data){
     var str ="";
     str += "<div class='box-body'>";
@@ -62,7 +83,7 @@ function getSonStr(data){
         str += "<td>"+data[i].created_at+"</td>";
         str += "<td>"+data[i].updated_at+"</td>";
         str += "<td>";
-        str += operateFormatter('',data[i],'');
+        str += operateFormatterMenu('',data[i],'');
         str += "</td>";
         str += "</tr>";
     }

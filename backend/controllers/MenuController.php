@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: xu.gao
- * Date: 2016/1/20
- * Time: 9:16
- */
 
 namespace backend\controllers;
 
@@ -66,12 +60,12 @@ class MenuController extends BaseController{
 
     public function actionMenulist(){
         $request = Yii::$app->request;
-        $params['search']   = $request->post('searchPhrase','');
-        $sort               = $request->post('sort','');
-        $order              = $request->post('order','');
+        $params['search']   = $request->get('search','');
+        $sort               = $request->get('sort','created_at');
+        $order              = $request->get('order','');
         $params['sort']     = $sort.' '.$order;
-        $params['pageIndex']= $request->post('offset',0);
-        $params['pageSize'] = $request->post('limit',10);
+        $params['offset']= $request->get('offset',0);
+        $params['pageSize'] = $request->get('limit',10);
         $data               = $this->menuService->menuList($params);
         $totalCount         = $this->menuService->menuCount($params);
         $json_data = array(

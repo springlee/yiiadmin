@@ -197,7 +197,7 @@ class Admin extends ActiveRecord implements IdentityInterface
         //每页显示几条
         $limit  = $page['pageSize'];
         //计算分页
-        $offset = ($page['pageIndex'] - 1) * $limit;
+        $offset = $page['offset'];
 
         $ret    = $query    ->andFilterWhere(['like','username',$page['search']])
             ->orFilterWhere(['like','email',$page['search']])

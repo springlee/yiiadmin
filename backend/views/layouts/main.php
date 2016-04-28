@@ -111,7 +111,7 @@ AppAsset::register($this);
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="<?php echo Url::to(['permission/permissionlist'])?>" >权限列表</a>
+                                <a class="J_menuItem" href="<?php echo Url::to(['permission/permission'])?>" >权限列表</a>
                             </li>
                             <li>
                                 <a class="J_menuItem" href="<?php echo Url::to(['permission/permissionadd'])?>">添加权限</a>
@@ -128,10 +128,10 @@ AppAsset::register($this);
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="<?php echo Url::to(['menu/menu'])?>" >权限列表</a>
+                            <a class="J_menuItem" href="<?php echo Url::to(['role/role'])?>" >角色列表</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="<?php echo Url::to(['menu/menu'])?>">添加权限</a>
+                            <a class="J_menuItem" href="<?php echo Url::to(['role/roleadd'])?>">添加角色</a>
                             </li>
                 </li>
                 </ul>
