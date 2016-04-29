@@ -47,8 +47,6 @@ class RoleController extends BaseController{
      * 添加角色
      */
     public function actionRoleadd(){
-
-
         return $this->render('roleadd');
     }
     /**
@@ -70,7 +68,6 @@ class RoleController extends BaseController{
      * 更新角色数据页面
      */
     public function actionRoleupdate(){
-
         $roleName = Yii::$app->request->get('name','');
         $role     = $this->roleservice->queryRoleByWhere(['name'=>$roleName,'type'=>1]);
         return $this->render('roleupdate',['model'=>$role]);
@@ -79,18 +76,11 @@ class RoleController extends BaseController{
      * 更新角色数据处理
      */
     public function actionRoleupdatedone(){
-
         $request = Yii::$app->request;
-
-        //print_r($request->post());exit;
-
         $ret = $this->roleservice->roleUpdate($request->post());
-
         if($ret){
-
             Flush::success('角色更新成功');
         }else{
-
             Flush::danger('操作失败');
         }
         return $this->redirect('/role/roleupdate/'.$request->post('name'));
@@ -113,14 +103,10 @@ class RoleController extends BaseController{
     public function actionRolepermissiondone(){
 
         $request = Yii::$app->request;
-
         $ret     = $this->roleservice->assignRole($request->post());
-
         if($ret){
-
             Flush::success('权限分配成功');
         }else{
-
             Flush::danger('操作失败');
         }
         return $this->redirect('/role/rolepermission/'.$request->post('name'));

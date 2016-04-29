@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use backend\assets\AppAsset;
 AppAsset::addScript($this,'@web/custom/user.js');
 ?>
-<div class="card">
+<div class="ibox float-e-margins">
     <?php if(Yii::$app->session->get('msg')){ ?>
         <div class="alert alert-<?=Yii::$app->session->get('type')?> alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -14,10 +14,15 @@ AppAsset::addScript($this,'@web/custom/user.js');
         <?php Yii::$app->session->set('msg','');Yii::$app->session->set('type',''); ?>
     <?php }?>
     <?= Html::beginForm([Url::toRoute('/user/userupdatedone')],'post',['class'=>'form-horizontal']) ?>
-    <div class="card-header">
-        <h2>更新用户</h2>
+    <div class="ibox-title">
+        <h5>更新用户</h5>
+        <div class="ibox-tools">
+            <a class="collapse-link" title="返回" href="<?php echo Url::to(['user/user'])?>" >
+                <i class="fa fa-chevron-up"></i>
+            </a>
+        </div>
     </div>
-    <div class="card-body card-padding">
+    <div class="ibox-content">
         <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">用户名</label>
             <div class="col-sm-5">
@@ -37,9 +42,7 @@ AppAsset::addScript($this,'@web/custom/user.js');
             <div class="col-sm-5">
                 <select  name="roles[]" class="form-control input-sm select2" multiple>
                     <?php foreach($roleList as $item): ?>
-
                         <option value="<?=$item['name']?>" <?php if(in_array($item['name'],$roles)) echo 'selected'; ?>><?=$item['description']?></option>
-
                     <?php endforeach;?>
                 </select>
             </div>
@@ -59,7 +62,7 @@ AppAsset::addScript($this,'@web/custom/user.js');
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn bgm-blue waves-effect waves-button waves-float">提交</button>
+                <button type="submit" class="btn btn-primary">提交</button>
             </div>
         </div>
     </div>

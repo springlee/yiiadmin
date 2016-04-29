@@ -23,7 +23,7 @@ class AppAsset extends AssetBundle
         'static/style/animate.min.css',
         'static/style/style.min.css',
         'static/style/bootstrap-table.min.css',
-        'static/style/toastr.min.css'
+        'static/style/toastr.min.css',
     ];
     public $js = [
        'static/js/bootstrap.min.js',

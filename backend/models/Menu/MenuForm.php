@@ -51,7 +51,6 @@ class MenuForm extends Model{
             if ($ret['id'] == $this->id) {
                 return true;
             } else {
-
                 $this->addError('name', '菜单名称不能重复');
                 return false;
             }

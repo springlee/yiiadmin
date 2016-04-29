@@ -2,10 +2,11 @@
 use backend\assets\AppAsset;
 AppAsset::addScript($this,'@web/custom/table.js');
 ?>
-<div class="card">
-    <div class="card-header">
-        <h2>菜单列表</h2>
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>菜单列表</h5>
     </div>
+    <div class="ibox-content">
     <table data-toggle="table"
            data-search="true"
            data-show-refresh="true"
@@ -27,5 +28,5 @@ AppAsset::addScript($this,'@web/custom/table.js');
         </tr>
         </thead>
     </table>
-
+    </div>
 </div>

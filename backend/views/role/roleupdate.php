@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 ?>
-<div class="card">
+<div class="ibox float-e-margins">
     <?php if(Yii::$app->session->get('msg')){ ?>
         <div class="alert alert-<?=Yii::$app->session->get('type')?> alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -13,10 +13,15 @@ use yii\helpers\Html;
     <?php }?>
     <?= Html::beginForm([Url::toRoute('/role/roleupdatedone')],'post',['class'=>'form-horizontal']) ?>
     <?=Html::input('hidden','oldname',$model->name) ?>
-    <div class="card-header">
-        <h2>更新角色</h2>
+    <div class="ibox-title">
+        <h5>更新角色</h5>
+        <div class="ibox-tools">
+            <a class="collapse-link" title="返回" href="<?php echo Url::to(['role/role'])?>" >
+                <i class="fa fa-chevron-up"></i>
+            </a>
+        </div>
     </div>
-    <div class="card-body card-padding">
+    <div class="ibox-content">
         <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">角色名称</label>
             <div class="col-sm-5">
@@ -45,7 +50,7 @@ use yii\helpers\Html;
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn bgm-blue waves-effect waves-button waves-float">提交</button>
+                <button type="submit" class="btn btn-primary">提交</button>
             </div>
         </div>
     </div>

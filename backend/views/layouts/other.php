@@ -24,7 +24,9 @@ AppAsset::register($this);
 </head>
 <body  class="gray-bg">
 <?php $this->beginBody() ?>
+      <div class="wrapper wrapper-content animated fadeInRight">
       <?= $content ?>
+      </div>
 <?php $this->endBody() ?>
 </body>
 </html>

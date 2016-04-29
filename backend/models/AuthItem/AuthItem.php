@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: xu.gao
- * Date: 2016/1/25
- * Time: 15:13
- */
 
 namespace backend\models\AuthItem;
 
